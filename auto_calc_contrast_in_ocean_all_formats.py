@@ -303,33 +303,34 @@ for thisfile in filelist[args.initial:args.final]:
 
         figure(figsize=(16,9),dpi=110) # db signal amplitude
         clims = np.percentile(nrcs_db.data[~nrcs_db.mask], [5,95])
-        imshow(nrcs_db, vmin=clims[0], vmax=clims[1], cmap='gray', origin='lower')
+        imshow(nrcs_db, vmin=clims[0], vmax=clims[1], cmap='gray', origin='upper')
         title(file_basename)
         colorbar(label='NRCS [dB]')
         savefig(abspath(path.join(outdir, f'{file_basename}_{versionLabel}_NRCS_dB.png')))
 
         figure(figsize=(16,9),dpi=110) # linear signal amplitude with cumulative overlay
         clims = np.percentile(nrcs_lin.data[~nrcs_lin.mask], [5,95])
-        imshow(nrcs_lin, vmin=clims[0], vmax=clims[1], cmap='gray', origin='lower')
+        imshow(nrcs_lin, vmin=clims[0], vmax=clims[1], cmap='gray', origin='upper')
         colorbar(label='NRCS [linear]',fraction=.05)
         title(file_basename)
-        imshow(cumu_expanded,cmap='gist_rainbow', origin='lower')
+        imshow(cumu_expanded,cmap='gist_rainbow', origin='upper')
         colorbar(label='cumulative', fraction=.05)
-        imshow(nrcs_lin, alpha=0, origin='lower') # transparent overlay
+        imshow(nrcs_lin, alpha=0, origin='upper') # transparent overlay
         savefig(abspath(path.join(outdir, f'{file_basename}_{versionLabel}_NRCS_linear+cumul.png')))
 
         figure(figsize=(16,9),dpi=110) # linear damping ratio
         clims = np.percentile(dampratio.data[~dampratio.mask], [5,99.9])
-        imshow(dampratio, vmin=clims[0], vmax=clims[1], origin='lower')
+        imshow(dampratio, vmin=clims[0], vmax=clims[1], origin='upper')
         colorbar(label=f'{cfgOut["ID"]} [linear]')
         title(file_basename)
         savefig(abspath(path.join(outdir, f'{file_basename}_{cfgOut["ID"]}_linear.png')))
 
         figure(figsize=(16,9),dpi=110) # logarithmic damping ratio (dB)
-        imshow((10*np.ma.log10(dampratio)), vmin=10*np.log10(clims[0]), vmax=10*np.log10(clims[1]), origin='lower')
+        imshow((10*np.ma.log10(dampratio)), vmin=10*np.log10(clims[0]), vmax=10*np.log10(clims[1]), origin='upper')
         colorbar(label=f'{cfgOut["ID"]} [dB]')
         title(file_basename)
         savefig(abspath(path.join(outdir, f'{file_basename}_{cfgOut["ID"]}_dB.png')))
+        close('all')
 
         # output format is specified by cfgOut['format'] \in {envi, geotiff, netcdf}
         datadict = {'contrast_ratio': {'data': dampratio,
