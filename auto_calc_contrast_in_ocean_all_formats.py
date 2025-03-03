@@ -330,6 +330,7 @@ for thisfile in filelist[args.initial:args.final]:
         colorbar(label=f'{cfgOut["ID"]} [dB]')
         title(file_basename)
         savefig(abspath(path.join(outdir, f'{file_basename}_{cfgOut["ID"]}_dB.png')))
+        close('all')
 
         # output format is specified by cfgOut['format'] \in {envi, geotiff, netcdf}
         datadict = {'contrast_ratio': {'data': dampratio,
